@@ -1,0 +1,30 @@
+{
+  "name": "rccg-lighthouse-daventry",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:preview": "vite build --mode preview",
+    "preview": "vite preview",
+    "images": "node scripts/download-images.mjs",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "lucide-react": "^1.72.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.3.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5",
+    "vite": "^8.3.8",
+    "vite-plugin-singlefile": "^2.3.4",
+    "wrangler": "^4.160.0"
+  }
+}

@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Josefin Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-cream: #f5f0e8;
+  --color-bone: #ede7d9;
+  --color-gold: #c9a84c;
+  --color-gold-lt: #e2c97e;
+  --color-gold-dk: #8b6914;
+  --color-charcoal: #1a1814;
+  --color-ink: #2c2820;
+  --color-muted: #7a7268;
+  --color-paper: #fdfbf7;
+
+  --animate-ticker: ticker 30s linear infinite;
+  --animate-breathe: breathe 8s ease-in-out infinite;
+  --animate-drift: heroBgDrift 20s ease-in-out infinite alternate;
+  --animate-fade-up: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-line-fall: lineFall 12s linear infinite;
+  --animate-scroll-pulse: scrollPulse 2.4s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+  body {
+    @apply bg-charcoal font-sans font-light text-cream antialiased;
+  }
+  /* Faint film-grain over everything, as on the original site */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  ::selection {
+    @apply bg-gold text-charcoal;
+  }
+  :focus-visible {
+    @apply outline-1 outline-offset-4 outline-gold;
+  }
+}
+
+/* Small uppercase label with a gold rule before it */
+@utility label-gold {
+  @apply flex items-center gap-3.5 text-[0.62rem] font-light tracking-[0.5em] text-gold uppercase;
+  &::before {
+    content: "";
+    @apply block h-px w-[30px] bg-gold;
+  }
+}
+
+@utility container-site {
+  @apply mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-14;
+}
+
+@utility btn-base {
+  @apply relative inline-flex items-center justify-center gap-3 overflow-hidden px-10 py-4 text-[0.7rem] tracking-[0.25em] uppercase transition duration-300;
+}
+
+@utility btn-gold {
+  @apply btn-base bg-gold font-normal text-charcoal hover:-translate-y-0.5 hover:bg-gold-lt hover:shadow-[0_12px_40px_rgba(201,168,76,0.3)];
+}
+
+@utility btn-outline {
+  @apply btn-base border border-gold/40 font-light text-cream hover:-translate-y-0.5 hover:border-gold hover:text-gold-lt;
+}
+
+@utility btn-dark {
+  @apply btn-base bg-charcoal px-12 py-5 font-light whitespace-nowrap text-cream hover:-translate-y-0.5 hover:bg-ink hover:shadow-[0_16px_48px_rgba(26,24,20,0.3)];
+}
+
+@utility display-title {
+  @apply font-display text-[clamp(2.3rem,4vw,3.6rem)] leading-[1.12] font-light;
+  & em {
+    @apply italic;
+  }
+}
+
+/* Scroll-reveal: elements fade up the first time they enter the viewport */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes heroBgDrift {
+  from {
+    transform: scale(1.04) translate(0, 0);
+  }
+  to {
+    transform: scale(1.1) translate(-1.5%, -1%);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lineFall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(250%);
+    opacity: 0;
+  }
+}
+@keyframes scrollPulse {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+    transform-origin: top;
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

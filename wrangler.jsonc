@@ -1,0 +1,18 @@
+{
+  // Cloudflare Worker with static assets (free plan: static requests are free and unmetered).
+  // In the Cloudflare dashboard set Build command: npm run build, Deploy command: npx wrangler deploy.
+  // Locally: `npx wrangler login` then `npm run deploy`.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rccg-lighthouse-daventry",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    // Any unknown path falls back to the one-page site
+    "not_found_handling": "single-page-application"
+  }
+  // After DNS is on Cloudflare, add the domain here or in the dashboard:
+  // "routes": [
+  //   { "pattern": "rccglighthousedaventry.co.uk", "custom_domain": true },
+  //   { "pattern": "www.rccglighthousedaventry.co.uk", "custom_domain": true }
+  // ]
+}
